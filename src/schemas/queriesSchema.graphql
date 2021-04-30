@@ -1,0 +1,7 @@
+# import Mutation from "./mutationsSchema.graphql"
+# import { Products, Product } from "./productsSchema.graphql"
+
+type Query {
+  products(page:Int, limit:Int): Products,
+  product(id:Int): Product
+}

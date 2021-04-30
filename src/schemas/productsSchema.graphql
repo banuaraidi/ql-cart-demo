@@ -1,0 +1,13 @@
+type Products {
+  items: [Product]
+  totalCount: Int
+  totalPage: Int
+}
+
+type Product {
+  id: Int,
+	sku: String,
+	name: String,
+	price: Float,
+	quantity: Int
+}

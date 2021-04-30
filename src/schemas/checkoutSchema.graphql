@@ -1,0 +1,38 @@
+type Checkout {
+  orderNumber: String
+  total: Int
+}
+
+type Shipping {
+  name: String!
+  addressLine1: String!
+  addressLine2: String
+  addressLine3: String
+  City: String!
+  postalCode: String!
+  country: String!
+}
+
+type Billing {
+  name: String!
+  addressLine1: String!
+  addressLine2: String
+  addressLine3: String
+  City: String!
+  postalCode: String!
+  country: String!
+}
+
+type Payment {
+  type: String
+  bankCode: String
+}
+
+input CheckoutRequest {
+  cartId: Int
+  userId: Int
+  email: String,
+  payment: Payment,
+  shipping: Shipping
+  billing: Billing 
+}

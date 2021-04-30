@@ -1,0 +1,44 @@
+type Cart {
+  id: Int
+  userId: Int
+  productId: Int
+  productName: String
+  price: Int
+  quantity: Int
+}
+
+type Carts {
+  items: [Cart]
+}
+
+type ItemCart {
+  userId: Int
+  cartItemId: Int
+  productId: Int
+  productName: String
+  price: Int
+  quantity: Int
+}
+
+input AddCartRequest {
+  id: Int
+  userId: Int
+  productId: Int
+  productName: String
+  price: Int
+  quantity: Int
+}
+
+input UpdateCartRequest {
+  userId: Int
+  cartItemId: Int
+  productId: Int
+  productName: String
+  price: Int
+  quantity: Int
+}
+
+type HttpResponse {
+  status: String
+  description: String
+}
