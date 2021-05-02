@@ -1,0 +1,6 @@
+# Auto-generated folders
+coverage
+node_modules
+
+# Logs
+yarn-error.log*
