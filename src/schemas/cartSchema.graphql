@@ -1,41 +1,41 @@
+# import Product from './productsSchema.graphql'
+# import Promo from './promoSchema.graphql'
+
 type Cart {
   id: Int
-  userId: Int
+  # userId: Int
   productId: Int
-  productName: String
+  # productName: String
   price: Int
   quantity: Int
+  product: Product
+  promo: Promo
 }
 
-type Carts {
-  items: [Cart]
+type Cart {
+  items: [ItemCart]
 }
 
 type ItemCart {
-  userId: Int
-  cartItemId: Int
+  id: Int
   productId: Int
-  productName: String
   price: Int
   quantity: Int
+  product: Product
+  promo: Promo
 }
 
 input AddCartRequest {
-  id: Int
+  id: Int!
   userId: Int
-  productId: Int
-  productName: String
-  price: Int
-  quantity: Int
+  productId: Int!
+  quantity: Int!
 }
 
 input UpdateCartRequest {
   userId: Int
-  cartItemId: Int
-  productId: Int
-  productName: String
-  price: Int
-  quantity: Int
+  cartItemId: Int!
+  quantity: Int!
 }
 
 type HttpResponse {

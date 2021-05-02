@@ -1,7 +1,9 @@
-# import { Cart, ItemCart, AddCartRequest, UpdateCartRequest, HttpResponse } from "./cartSchema.graphql"
+# import { ItemCart, AddCartRequest, UpdateCartRequest, HttpResponse } from "./cartSchema.graphql"
+# import { Checkout, CheckoutRequest } from './checkoutSchema.graphql'
 
 type Mutation {
-  addCart(input: AddCartRequest): Cart,
-  updateItem(input: UpdateCartRequest): ItemCart,
-  removeItem(cartItemId: Int, productId: Int): HttpResponse,
+  addCart(input: AddCartRequest): ItemCart,
+  updateItem(input: UpdateCartRequest): HttpResponse,
+  removeItem(cartItemId: Int): HttpResponse,
+  checkout(input: CheckoutRequest): Checkout
 }

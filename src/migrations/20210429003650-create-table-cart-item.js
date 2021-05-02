@@ -27,8 +27,22 @@ module.exports = {
               primaryKey: true,
               autoIncrement: true
             },
-            cartId: Sequelize.INTEGER,
-            productId: Sequelize.INTEGER,
+            cartId: {
+              type: Sequelize.INTEGER,
+              allowNull: false,
+              references: {
+                model: 'carts',
+                key: 'id'
+              }
+            },
+            productId: {
+              type: Sequelize.INTEGER,
+              allowNull: false,
+              references: {
+                model: 'products',
+                key: 'id'
+              }
+            },
             productName: Sequelize.STRING,
             price: Sequelize.FLOAT(18, 6),
             quantity: Sequelize.INTEGER,
@@ -40,7 +54,8 @@ module.exports = {
         return Promise.resolve();
       }
       catch(error){
-        return Promise.reject(e);
+        console.log(error);
+        return Promise.reject(error);
       }
     })
   },
@@ -49,10 +64,10 @@ module.exports = {
     return queryInterface.sequelize.transaction(async t => {
       try {
         await queryInterface.dropTable('cartItems', { transaction: t });
-        await queryInterface.dropTable('cart', { transaction: t });
+        await queryInterface.dropTable('carts', { transaction: t });
       }
       catch(error){
-        return Promise.reject(e);
+        return Promise.reject(error);
       }
     })
   }

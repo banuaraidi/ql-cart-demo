@@ -5,7 +5,6 @@ module.exports = {
     try {
       await queryInterface.bulkInsert('products', [
         {
-          // id: Sequelize.fn('uuid'),
           sku: 'IP12PM9',
           name: 'Iphone 12 Pro Max',
           price: 999,
@@ -14,7 +13,6 @@ module.exports = {
           updatedAt: Sequelize.fn('NOW'),
         },
         {
-          // id: Sequelize.fn('uuid'),
           sku: 'AMBP20',
           name: 'Macbook Pro',
           price: 2999,
@@ -23,7 +21,6 @@ module.exports = {
           updatedAt: Sequelize.fn('NOW'),
         },
         {
-          // id: Sequelize.fn('uuid'),
           sku: 'APP20E',
           name: 'AirPods Pro',
           price: 249,
@@ -32,7 +29,6 @@ module.exports = {
           updatedAt: Sequelize.fn('NOW'),
         },
         {
-          // id: Sequelize.fn('uuid'),
           sku: 'CIP20CP',
           name: '20W Apple USB-C Power Adapter',
           price: 19,
@@ -41,7 +37,6 @@ module.exports = {
           updatedAt: Sequelize.fn('NOW'),
         },
         {
-          // id: Sequelize.fn('uuid'),
           sku: 'AHPM2',
           name: 'HomePod mini',
           price: 99,
@@ -50,6 +45,7 @@ module.exports = {
           updatedAt: Sequelize.fn('NOW'),
         }
       ], {});
+      
     } catch (error) {
       console.log(error);
     }

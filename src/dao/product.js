@@ -1,13 +1,15 @@
 import { Sequelize, DataTypes } from 'sequelize';
+
 import db from '../libs/database';
 const sequelize = db();
 
+import CartItem from './cartItem';
+
 const Product = sequelize.define('products', {
   id: {
-    type: DataTypes.UUID,
+    type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: false,
-    defaultValue: Sequelize.literal('uuid_generate_v4()')
+    autoIncrement: true
   },
   sku: {
     type: DataTypes.STRING,
@@ -33,6 +35,8 @@ const Product = sequelize.define('products', {
     defaultValue: Sequelize.NOW
   }
 });
+
+Product.hasMany(CartItem, { foreignKey: 'productId' })
 
 export const listProduct = async () => {
   const products = await Product.findAll();

@@ -1,7 +1,9 @@
 # import Mutation from "./mutationsSchema.graphql"
 # import { Products, Product } from "./productsSchema.graphql"
+# import { Cart } from './cartSchema.graphql'
 
 type Query {
   products(page:Int, limit:Int): Products,
-  product(id:Int): Product
+  product(id:Int): Product,
+  cart(id: Int!, userId: Int): Cart
 }

@@ -1,6 +1,12 @@
+# import ItemCart from './cartSchema.graphql'
+
 type Checkout {
   orderNumber: String
-  total: Int
+  items: [ItemCart]
+  totalPayment: Float
+  payment: Payment
+  billing: Billing
+  Shipping: Shipping
 }
 
 type Shipping {
@@ -29,10 +35,9 @@ type Payment {
 }
 
 input CheckoutRequest {
-  cartId: Int
+  cartItemIds: [Int]!
   userId: Int
-  email: String,
-  payment: Payment,
-  shipping: Shipping
-  billing: Billing 
+  paymentId: Int
+  shippingId: Int
+  billingId: Int
 }

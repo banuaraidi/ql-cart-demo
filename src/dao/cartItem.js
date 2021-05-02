@@ -1,5 +1,7 @@
 import { Sequelize, DataTypes } from 'sequelize';
+
 import db from '../libs/database';
+
 const sequelize = db();
 
 const CartItem = sequelize.define('cartItems', {

@@ -1,9 +1,13 @@
 import { Sequelize, DataTypes } from 'sequelize';
+
 import db from '../libs/database';
+
 import CartItem from './cartItem'
+import Product from './product'
+
 const sequelize = db();
 
-const Cart = sequelize.define('cart', {
+const Cart = sequelize.define('carts', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -20,7 +24,7 @@ const Cart = sequelize.define('cart', {
   }
 });
 
-Cart.hasMany(CartItem)
+// Cart.hasMany(CartItem, { foreignKey: 'cartId' })
 
 export const addCart = async (obj, args) => {
   const { 
@@ -28,51 +32,65 @@ export const addCart = async (obj, args) => {
       id,
       userId,
       productId,
-      productName,
-      price,
       quantity
     } 
   } = args || {}
 
-  // check existing Cart, if empty then create new
-  const [cart, created] = await Cart.findOrCreate({
-    where: { userId },
-    defaults: {
-      id,
-      createdAt: Sequelize.fn('NOW'),
-      updatedAt: Sequelize.fn('NOW')
-    }
-  });
-  if(cart){
-    // check existing item in Cart, if empty then add new item
-    const [cartItem, itemCreated] = await CartItem.findOrCreate({
-      where: { cartId: cart.id, productId },
+  let productName = ''
+  let productPrice = 0
+
+  const product = await Product.findByPk(productId);
+
+  if(product) {
+
+    productPrice = product.price;
+    productName = product.name;
+
+    // check existing Cart, if empty then create new
+    const [cart, created] = await Cart.findOrCreate({
+      where: { userId },
       defaults: {
-        productName,
-        price,
-        quantity,
+        id,
         createdAt: Sequelize.fn('NOW'),
         updatedAt: Sequelize.fn('NOW')
       }
-    })
-    // if item has existing then update
-    if(!itemCreated){
-      await CartItem.update({ 
-        productName, price, quantity, updatedAt: Sequelize.fn('NOW')
-      }, {
-        where: {
-          id: cartItem.id,
-          productId
+    });
+
+    if(cart){
+
+      // check existing item in Cart, if empty then add new item
+      const [cartItem, itemCreated] = await CartItem.findOrCreate({
+        where: { cartId: cart.id, productId },
+        defaults: {
+          productName,
+          price: productPrice,
+          quantity,
+          createdAt: Sequelize.fn('NOW'),
+          updatedAt: Sequelize.fn('NOW')
         }
       })
+
+      // if item has existing then update
+      if(!itemCreated){
+        await CartItem.update({ 
+          productName, price: productPrice, quantity, updatedAt: Sequelize.fn('NOW')
+        }, {
+          where: {
+            id: cartItem.id,
+            productId
+          }
+        })
+      }
+
     }
   }
+
   return {
     id,
     userId,
     productId,
     productName,
-    price,
+    price: productPrice,
     quantity
   }
 }
@@ -80,41 +98,31 @@ export const addCart = async (obj, args) => {
 export const updateItem = async (obj, args) => {
   const { 
     input: {
-      userId,
       cartItemId,
-      productId,
-      productName,
-      price,
       quantity
     } 
   } = args || {}
 
   await CartItem.update({ 
-    productName, price, quantity, updatedAt: Sequelize.fn('NOW')
+    quantity, updatedAt: Sequelize.fn('NOW')
   }, {
     where: {
-      id: cartItemId,
-      productId
+      id: cartItemId
     }
   })
 
   return {
-    userId,
-    cartItemId,
-    productId,
-    productName,
-    price,
-    quantity
+    status: "200",
+    description: "OK"
   }
 }
 
 export const removeItem = async (obj, args) => {
-  const { cartItemId, productId } = args
-  console.log({cartItemId, productId})
+  const { cartItemId } = args
+
   await CartItem.destroy({
     where:{
-      id: cartItemId,
-      productId
+      id: cartItemId
     }
   })
   return {

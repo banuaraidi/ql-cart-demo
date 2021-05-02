@@ -1,0 +1,6 @@
+type Promo {
+  minQuantity: Int
+  freeProduct: Product
+  discount: Int
+  freeQuantity: Int 
+}
